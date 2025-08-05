@@ -51,14 +51,14 @@ function Header({ user, hideHeader }) {
           justify="space-around"
           alignItems="center"
         >
-          <Grid item sm={9} xs={8} style={{ textAlign: "left" }}>
+          <Grid item sm={8} xs={7} style={{ textAlign: "left" }}>
             {user ? (
               <div />
             ) : (
               <Link prefetch href="/">
                 <a>
                   <Avatar
-                    src="https://storage.googleapis.com/builderbook-homepage/bb-logo-blue.png?v=1"
+                    src="https://storage.googleapis.com/builderbook-homepage/bb-logo-blue.svg?v=1"
                     alt="Builder Book logo"
                     style={{ margin: "0px auto 0px 20px" }}
                   />
@@ -66,7 +66,7 @@ function Header({ user, hideHeader }) {
               </Link>
             )}
           </Grid>
-          <Grid item sm={2} xs={2} style={{ textAlign: "right" }}>
+          <Grid item sm={2} xs={2} style={{ textAlign: "center" }}>
             {user && user.isAdmin && !user.isGithubConnected ? (
               <Hidden smDown>
                 <a href="/auth/github">
