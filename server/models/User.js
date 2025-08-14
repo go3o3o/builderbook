@@ -106,7 +106,6 @@ class UserClass {
 
     const slug = await generateSlug(this, displayName);
     const userCount = await this.find().count();
-    const demo = !!process.env.DEMO;
 
     const newUser = await this.create({
       createdAt: new Date(),
@@ -116,7 +115,7 @@ class UserClass {
       displayName,
       avatarUrl,
       slug,
-      isAdmin: userCount === 0 || demo,
+      isAdmin: userCount === 0,
     });
 
     /*

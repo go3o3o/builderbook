@@ -62,20 +62,8 @@ class BookClass {
   static async list({ userId }) {
     const allBooks = await this.find().sort({ createdAt: -1 });
 
-    let books = [];
+    const books = [];
     const otherBooks = [];
-
-    if (process.env.DEMO) {
-      allBooks.forEach((b) => {
-        if (b.userId && b.userId.equals(userId)) {
-          books.push(b);
-        } else {
-          otherBooks.push(b);
-        }
-      });
-    } else {
-      books = allBooks;
-    }
 
     return { books, otherBooks };
   }
@@ -145,13 +133,6 @@ class BookClass {
     isInPreorder = null,
     preorderPrice = null,
   }) {
-    if (process.env.DEMO) {
-      const bookCount = await this.find({ userId }).count();
-      if (bookCount > 0) {
-        throw new Error("Demo account can create only one book");
-      }
-    }
-
     const slug = await generateSlug(this, name);
 
     return this.create({
@@ -183,10 +164,6 @@ class BookClass {
       throw new Error("Not found");
     }
 
-    if (process.env.DEMO && (!book.userId || !book.userId.equals(userId))) {
-      throw new Error("Permission denied");
-    }
-
     const modifier = {
       price,
       supportURL,
@@ -211,10 +188,6 @@ class BookClass {
 
     if (!book) {
       throw new Error("Not found");
-    }
-
-    if (process.env.DEMO && (!book.userId || !book.userId.equals(userId))) {
-      throw new Error("Permission denied");
     }
 
     const lastCommit = await getCommits({
