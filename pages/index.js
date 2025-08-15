@@ -49,13 +49,13 @@ const Index = ({ user, toc }) => (
             Open source web app to write a blog, publish documentation, or sell
             a book.
           </p>
-          <p style={{ textAlign: "center" }}>
+          <div style={{ textAlign: "center" }}>
             <a
               href="https://github.com/builderbook/builderbook"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Button raised color="default" style={styleRaisedButton}>
+              <Button raised color="secondary" style={styleRaisedButton}>
                 See Code
               </Button>
             </a>
@@ -68,7 +68,7 @@ const Index = ({ user, toc }) => (
                 Live App
               </Button>
             </a>
-          </p>
+          </div>
           <p>
             <b>Built with:</b> React, Material-UI, Next.js, Express (Node.js),
             MongoDB. See
@@ -135,7 +135,7 @@ const Index = ({ user, toc }) => (
             Write and host books on Github, then sell them directly from your
             website.
           </p>
-          <p style={{ display: "none" }}>
+          <div style={{ display: "none" }}>
             <a
               href="https://builderbook.org/books/builder-book/introduction"
               target="_blank"
@@ -145,7 +145,7 @@ const Index = ({ user, toc }) => (
               Our book
             </a>{" "}
             is built with this app.
-          </p>
+          </div>
         </Grid>
       </Grid>
 
@@ -183,7 +183,7 @@ const Index = ({ user, toc }) => (
           </p>
           <p>
             <a
-              href="https://github.com/builderbook/builderbook#installation"
+              href="https://github.com/builderbook/builderbook#run-locally"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -241,7 +241,7 @@ const Index = ({ user, toc }) => (
       </Grid>
 
       <br />
-      <p style={{ display: "none" }}>
+      <div style={{ display: "none" }}>
         <h1
           style={{
             textAlign: "center",
@@ -252,7 +252,7 @@ const Index = ({ user, toc }) => (
         >
           The Book
         </h1>
-        <p style={{ textAlign: "center" }}>
+        <div style={{ textAlign: "center" }}>
           Our project is free and open source. If you want to support it and
           learn how we built this app, order
           <a
@@ -264,8 +264,8 @@ const Index = ({ user, toc }) => (
             our book
           </a>
           .
-        </p>
-        <p style={{ textAlign: "center" }}>
+        </div>
+        <div style={{ textAlign: "center" }}>
           In the book, we teach you how to build this web app from scratch -
           with complete
           <a
@@ -277,8 +277,8 @@ const Index = ({ user, toc }) => (
             codebases
           </a>{" "}
           for every chapter.
-        </p>
-        <p style={{ textAlign: "center" }}>
+        </div>
+        <div style={{ textAlign: "center" }}>
           <a
             href="https://builderbook.org/books/builder-book/introduction"
             target="_blank"
@@ -297,7 +297,7 @@ const Index = ({ user, toc }) => (
               Pre-order for $29
             </Button>
           </a>
-        </p>
+        </div>
 
         <Hidden only="xs">
           <TOC toc={toc} bookSlug="builder-book" />
@@ -324,7 +324,7 @@ const Index = ({ user, toc }) => (
         </Hidden>
 
         <br />
-      </p>
+      </div>
 
       <h1
         style={{
@@ -385,7 +385,6 @@ const Index = ({ user, toc }) => (
             src="https://storage.googleapis.com/builderbook-homepage/timur-picture.png"
             style={styleBigAvatar}
             alt="Timur Zhiyentayev"
-            id="av1"
           />
           <p>
             <a
@@ -413,7 +412,6 @@ const Index = ({ user, toc }) => (
             src="https://storage.googleapis.com/builderbook-homepage/kelly-picture.png"
             style={styleBigAvatar}
             alt="Kelly Burke"
-            id="av2"
           />
           <p>
             <a
@@ -441,7 +439,6 @@ const Index = ({ user, toc }) => (
             src="https://storage.googleapis.com/builderbook-homepage/delgermurun-picture.png"
             style={styleBigAvatar}
             alt="Delgermurun Purevkhuu"
-            id="av3"
           />
           <p>
             <a
@@ -487,7 +484,7 @@ const Index = ({ user, toc }) => (
           <p>
             See
             <a
-              href="https://github.com/builderbook/builderbook#installation"
+              href="https://github.com/builderbook/builderbook#run-locally"
               target="_blank"
               rel="noopener noreferrer"
             >
