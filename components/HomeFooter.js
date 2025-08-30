@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Toolbar from "material-ui/Toolbar";
 import Grid from "material-ui/Grid";
 
@@ -15,9 +14,6 @@ function Footer() {
           alignItems="center"
         >
           <span>© 2018 Builder Book</span>
-          <Link prefetch href="/public/terms" as="/terms">
-            <a>Terms</a>
-          </Link>
           <a
             style={{ padding: "0px 20px" }}
             href="https://github.com/builderbook"
