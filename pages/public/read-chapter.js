@@ -291,7 +291,7 @@ class ReadChapter extends React.Component {
           padding: "0px 25px",
         }}
       >
-        <p style={{ padding: "0px 40px", fontSize: "17px", fontWeight: "600" }}>
+        <p style={{ padding: "0px 40px", fontSize: "17px", fontWeight: "400" }}>
           {book.name}
         </p>
         <ol

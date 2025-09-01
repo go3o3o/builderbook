@@ -31,7 +31,7 @@ const Index = ({ user, toc }) => (
       />
     </Head>
     <Header user={user} />
-    <div style={{ padding: "10px 45px" }}>
+    <div style={{ padding: "10px 8%" }}>
       <Grid
         style={styleGrid}
         container
@@ -40,16 +40,17 @@ const Index = ({ user, toc }) => (
         align="flex-start"
       >
         <Grid item sm={12} xs={12} style={{ textAlign: "center" }}>
-          <h1
+          <br />
+          <p
             style={{ margin: "45px auto", fontSize: "44px", fontWeight: "400" }}
           >
             Builder Book
-          </h1>
+          </p>
           <p>
             Open source web app to write a blog, publish documentation, or sell
             a book.
           </p>
-          <div style={{ textAlign: "center" }}>
+          <p style={{ textAlign: "center" }}>
             <a
               href="https://github.com/builderbook/builderbook"
               target="_blank"
@@ -68,7 +69,7 @@ const Index = ({ user, toc }) => (
                 Live App
               </Button>
             </a>
-          </div>
+          </p>
           <p>
             <b>Built with:</b> React, Material-UI, Next.js, Express (Node.js),
             MongoDB. See
@@ -252,7 +253,7 @@ const Index = ({ user, toc }) => (
         >
           The Book
         </h1>
-        <div style={{ textAlign: "center" }}>
+        <p style={{ textAlign: "center" }}>
           Our project is free and open source. If you want to support it and
           learn how we built this app, order
           <a
@@ -264,8 +265,8 @@ const Index = ({ user, toc }) => (
             our book
           </a>
           .
-        </div>
-        <div style={{ textAlign: "center" }}>
+        </p>
+        <p style={{ textAlign: "center" }}>
           In the book, we teach you how to build this web app from scratch -
           with complete
           <a
@@ -277,8 +278,8 @@ const Index = ({ user, toc }) => (
             codebases
           </a>{" "}
           for every chapter.
-        </div>
-        <div style={{ textAlign: "center" }}>
+        </p>
+        <p style={{ textAlign: "center" }}>
           <a
             href="https://builderbook.org/books/builder-book/introduction"
             target="_blank"
@@ -297,7 +298,7 @@ const Index = ({ user, toc }) => (
               Pre-order for $29
             </Button>
           </a>
-        </div>
+        </p>
 
         <Hidden only="xs">
           <TOC toc={toc} bookSlug="builder-book" />
@@ -336,7 +337,7 @@ const Index = ({ user, toc }) => (
       >
         The Team
       </h1>
-      <p style={{ textAlign: "center" }}>
+      <div style={{ textAlign: "center" }}>
         Together, we've built production-ready web apps and reached thousands of
         users:
         <a
@@ -356,17 +357,8 @@ const Index = ({ user, toc }) => (
           {" "}
           Harbor
         </a>
-        ,
-        <a
-          href="https://builderbook.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {" "}
-          Builder Book
-        </a>
         .
-      </p>
+      </div>
       <br />
       <Grid
         style={{ styleGrid }}
@@ -382,7 +374,7 @@ const Index = ({ user, toc }) => (
           style={{ textAlign: "center", padding: "10px 45px" }}
         >
           <Avatar
-            src="https://storage.googleapis.com/builderbook-homepage/timur-picture.png"
+            src="https://storage.googleapis.com/builderbook/timur-picture.png"
             style={styleBigAvatar}
             alt="Timur Zhiyentayev"
           />
@@ -409,7 +401,7 @@ const Index = ({ user, toc }) => (
           style={{ textAlign: "center", padding: "10px 45px" }}
         >
           <Avatar
-            src="https://storage.googleapis.com/builderbook-homepage/kelly-picture.png"
+            src="https://storage.googleapis.com/builderbook/kelly-picture.png"
             style={styleBigAvatar}
             alt="Kelly Burke"
           />
@@ -436,7 +428,7 @@ const Index = ({ user, toc }) => (
           style={{ textAlign: "center", padding: "10px 45px" }}
         >
           <Avatar
-            src="https://storage.googleapis.com/builderbook-homepage/delgermurun-picture.png"
+            src="https://storage.googleapis.com/builderbook/delgermurun-picture.png"
             style={styleBigAvatar}
             alt="Delgermurun Purevkhuu"
           />
@@ -583,7 +575,6 @@ const Index = ({ user, toc }) => (
           </p>
         </Grid>
       </Grid>
-
       <br />
     </div>
     <Footer />
