@@ -8,6 +8,7 @@ const styleBigAvatar = {
 
 const styleRaisedButton = {
   margin: "15px 15px 30px 15px",
+  font: "15px Muli",
 };
 
 const styleToolbar = {

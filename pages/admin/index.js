@@ -26,6 +26,7 @@ const Index = ({ books }) => (
             {books.map((b) => (
               <li key={b._id}>
                 <Link
+                  prefetch
                   as={`/admin/book-detail/${b.slug}`}
                   href={`/admin/book-detail?slug=${b.slug}`}
                 >
@@ -36,7 +37,7 @@ const Index = ({ books }) => (
           </ul>
 
           <Link href="/admin/add-book">
-            <Button raised>Add book</Button>
+            <Button variant="raised">Add book</Button>
           </Link>
         </div>
         <br />

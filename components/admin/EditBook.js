@@ -178,7 +178,7 @@ class EditBook extends React.Component {
             label="Preorder"
           />
           <br />
-          <Button raised type="submit">
+          <Button variant="raised" type="submit">
             Save
           </Button>
         </form>

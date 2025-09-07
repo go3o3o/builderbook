@@ -56,7 +56,11 @@ const Index = ({ user, toc }) => (
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Button raised color="secondary" style={styleRaisedButton}>
+              <Button
+                variant="raised"
+                color="secondary"
+                style={styleRaisedButton}
+              >
                 See Code
               </Button>
             </a>
@@ -65,7 +69,11 @@ const Index = ({ user, toc }) => (
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Button raised color="primary" style={styleRaisedButton}>
+              <Button
+                variant="raised"
+                color="primary"
+                style={styleRaisedButton}
+              >
                 Live App
               </Button>
             </a>
@@ -285,7 +293,7 @@ const Index = ({ user, toc }) => (
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Button raised color="primary" style={styleRaisedButton}>
+            <Button variant="raised" color="primary" style={styleRaisedButton}>
               Read the Introduction
             </Button>
           </a>
@@ -294,7 +302,7 @@ const Index = ({ user, toc }) => (
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Button raised color="primary" style={styleRaisedButton}>
+            <Button variant="raised" color="primary" style={styleRaisedButton}>
               Pre-order for $29
             </Button>
           </a>
