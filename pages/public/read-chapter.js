@@ -8,7 +8,6 @@ import throttle from "lodash/throttle";
 
 import Link from "next/link";
 import marked from "marked";
-import he from "he";
 import hljs from "highlight.js";
 
 import BuyButton from "../../components/customer/BuyButton";
@@ -128,9 +127,9 @@ class ReadChapter extends React.Component {
     const { chapter } = props;
     let htmlContent = "";
     if (chapter && (chapter.isPurchased || chapter.isFree)) {
-      htmlContent = marked(he.decode(chapter.content));
+      htmlContent = marked(s.text);
     } else {
-      htmlContent = marked(he.decode(chapter.excerpt));
+      htmlContent = marked(chapter.excerpt);
     }
 
     this.state = {
@@ -153,9 +152,9 @@ class ReadChapter extends React.Component {
       let htmlContent;
 
       if (chapter.isPurchased || chapter.isFree) {
-        htmlContent = marked(he.decode(chapter.content));
+        htmlContent = marked(chapter.content);
       } else {
-        htmlContent = marked(he.decode(chapter.excerpt));
+        htmlContent = marked(chapter.excerpt);
       }
 
       this.setState({ chapter: nextProps.chapter, htmlContent });
@@ -231,10 +230,10 @@ class ReadChapter extends React.Component {
         }}
         id="chapter-content"
       >
-        <h3>
+        <h2 style={{ fontWeight: "400" }}>
           {chapter.order > 1 ? `Chapter ${chapter.order - 1}: ` : null}
           {chapter.title}
-        </h3>
+        </h2>
         <div
           // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: htmlContent }}
@@ -266,12 +265,12 @@ class ReadChapter extends React.Component {
               style={{
                 color:
                   activeSection && activeSection.hash === s.escapedText
-                    ? "blue"
-                    : "black",
+                    ? "#1565C0"
+                    : "#222",
               }}
               href={`#${s.escapedText}`}
             >
-              {he.decode(s.text)}
+              {s.text}
             </a>
           </li>
         ))}
@@ -327,7 +326,9 @@ class ReadChapter extends React.Component {
                 as={`/books/${book.slug}/${ch.slug}`}
                 href={`/public/read-chapter?bookSlug=${book.slug}&chapterSlug=${ch.slug}`}
               >
-                <a style={{ color: chapter._id === ch._id ? "blue" : "black" }}>
+                <a
+                  style={{ color: chapter._id === ch._id ? "#1565C0" : "#222" }}
+                >
                   {ch.title}
                 </a>
               </Link>
@@ -356,7 +357,11 @@ class ReadChapter extends React.Component {
     return (
       <div style={{ padding: "10px 45px" }}>
         <Head>
-          <title>{chapter.seoTitle || chapter.title}</title>
+          <title>
+            {chapter.title === "Introduction"
+              ? "Introduction"
+              : `Chapter ${chapter.order - 1}. ${chapter.title}`}
+          </title>
           {chapter.seoDescription ? (
             <meta name="description" content={chapter.seoDescription} />
           ) : null}

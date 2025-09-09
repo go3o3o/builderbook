@@ -1,11 +1,69 @@
 import mongoose, { Schema } from "mongoose";
 import marked from "marked";
 import he from "he";
+import hljs from "highlight.js";
 
 import generateSlug from "../utils/slugify";
-import sanitizeHtml from "../utils/sanitizeHtml";
 import Book from "./Book";
 import Purchase from "./Purchase";
+
+function markdownToHtml(content) {
+  const renderer = new marked.Renderer();
+
+  renderer.link = (href, title, text) => {
+    const t = title ? ` title="${title}"` : "";
+    return `<a target="_blank" href="${href}" rel="noopener noreferrer"${t}>${text}</a>`;
+  };
+
+  renderer.image = (href) =>
+    `<img src="${href}" width="100%" alt="Builder Book">`;
+
+  renderer.heading = (text, level) => {
+    const escapedText = text
+      .trim()
+      .toLowerCase()
+      .replace(/[^\w]+/g, "-");
+
+    if (level === 2) {
+      return `<a
+        class="section-anchor"
+        name="${escapedText}"
+        href="#${escapedText}"
+        >
+        <h${level} class="chapter-section" style="color: #222; font-weight: 400;">
+          ${text}
+        </h${level}>
+      </a>`;
+    }
+
+    if (level === 4) {
+      return `<a
+        name="${escapedText}"
+        href="#${escapedText}"
+        >
+        <h${level} style="color: #222;">
+          ${text}
+        </h${level}>
+      </a>`;
+    }
+
+    return `<h${level} style="color: #222; font-weight: 400;">${text}</h${level}>`;
+  };
+
+  marked.setOptions({
+    renderer,
+    breaks: true,
+    highlight(code, lang) {
+      if (!lang) {
+        return hljs.highlightAuto(code).value;
+      }
+
+      return hljs.highlight(lang, code).value;
+    },
+  });
+
+  return marked(he.decode(content));
+}
 
 function getSections(content) {
   const renderer = new marked.Renderer();
@@ -59,6 +117,11 @@ const mongoSchema = new Schema({
     default: "",
   },
   content: {
+    type: String,
+    default: "",
+    required: true,
+  },
+  htmlContent: {
     type: String,
     default: "",
     required: true,
@@ -179,7 +242,8 @@ class ChapterClass {
       order = parseInt(path.match(/[0-9]+/), 10) + 1;
     }
 
-    const content = sanitizeHtml(body);
+    const content = body;
+    const htmlContent = markdownToHtml(content);
     const sections = getSections(content);
 
     if (!chapter) {
@@ -192,8 +256,9 @@ class ChapterClass {
         slug,
         isFree,
         content,
+        htmlContent,
         sections,
-        excerpt: sanitizeHtml(excerpt),
+        excerpt: marked(he.decode(excerpt)),
         order,
         seoTitle,
         seoDescription,
@@ -203,8 +268,9 @@ class ChapterClass {
 
     const modifier = {
       content,
+      htmlContent,
       sections,
-      excerpt: sanitizeHtml(excerpt),
+      excerpt: marked(he.decode(excerpt)),
       isFree,
       order,
       seoTitle,
