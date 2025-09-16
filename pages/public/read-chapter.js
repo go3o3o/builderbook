@@ -78,11 +78,19 @@ class ReadChapter extends React.Component {
       showChapters: false,
       chapter,
       htmlContent,
+      isMobile: false,
     };
   }
 
   componentDidMount() {
     this.mainContentElm.addEventListener("scroll", this.onScroll);
+
+    let isMobile = false;
+    if (window.innerWidth < 768) {
+      isMobile = true;
+    }
+
+    this.setState({ isMobile }); // eslint-disable-line
   }
 
   componentWillReceiveProps(nextProps) {
@@ -160,9 +168,13 @@ class ReadChapter extends React.Component {
     });
   };
 
+  closeTocWhenMobile = () => {
+    this.setState({ showChapters: !this.state.isMobile });
+  };
+
   renderMainContent() {
     const { user, showStripeModal } = this.props;
-    const { chapter, htmlContent } = this.state;
+    const { chapter, htmlContent, isMobile, showChapters } = this.state;
 
     return (
       <div
@@ -211,6 +223,7 @@ class ReadChapter extends React.Component {
                     : "#222",
               }}
               href={`#${s.escapedText}`}
+              onClick={this.closeTocWhenMobile}
             >
               {s.text}
             </a>
@@ -262,6 +275,7 @@ class ReadChapter extends React.Component {
                 listStyle: i === 0 ? "none" : "decimal",
                 paddingBottom: "10px",
               }}
+              onClick={this.closeTocWhenMobile}
             >
               <Link
                 prefetch
