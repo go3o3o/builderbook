@@ -116,7 +116,7 @@ class ReadChapter extends React.Component {
   }
 
   onScroll = throttle(() => {
-    const sectionElms = document.querySelectorAll("a.section-anchor");
+    const sectionElms = document.querySelectorAll("sapn.section-anchor");
     let activeSection;
 
     let preBound;
@@ -199,7 +199,7 @@ class ReadChapter extends React.Component {
           // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: htmlContent }}
         />
-        {!chapter.isPurchased ? (
+        {!chapter.isPurchased && !chapter.isFree ? (
           <BuyButton
             user={user}
             book={chapter.book}

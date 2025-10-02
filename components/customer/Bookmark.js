@@ -75,7 +75,7 @@ export default class Bookmark extends React.Component {
 
   render() {
     const { anchorEl } = this.state;
-    const { bookmark } = this.props;
+    const { bookmark, activeSection } = this.props;
 
     return (
       <div>
@@ -103,7 +103,19 @@ export default class Bookmark extends React.Component {
               </MenuItem>
             </a>
           ) : null}
-          <MenuItem onClick={this.addBookmark}>Create new bookmark</MenuItem>
+          {!bookmark ? (
+            <MenuItem onClick={this.addBookmark}>
+              {!activeSection
+                ? "To bookmark a new section, scroll to that section"
+                : `Bookmark section "${activeSection.text}"`}
+            </MenuItem>
+          ) : (
+            <MenuItem onClick={this.addBookmark}>
+              {!activeSection
+                ? "To bookmark a new section, scroll to that section"
+                : `Bookmark section "${activeSection.text}"`}
+            </MenuItem>
+          )}
         </Menu>
       </div>
     );
