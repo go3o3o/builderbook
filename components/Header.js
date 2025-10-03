@@ -10,7 +10,7 @@ import Avatar from "material-ui/Avatar";
 
 import MenuDrop from "./MenuDrop";
 
-import { styleToolbar } from "./SharedStyles";
+import { styleToolbar, styleRaisedButton } from "./SharedStyles";
 
 Router.onRouteChangeStart = () => {
   NProgress.start();
@@ -43,7 +43,15 @@ const optionsMenuAdmin = [
 
 function Header({ user, hideHeader }) {
   return (
-    <div style={{ display: hideHeader ? "none" : "block" }}>
+    <div
+      style={{
+        overflow: "hidden",
+        position: "relative",
+        display: "block",
+        top: hideHeader ? "-64px" : "0px",
+        transition: "top 0.5s ease-in",
+      }}
+    >
       <Toolbar style={styleToolbar}>
         <Grid
           container
@@ -66,18 +74,22 @@ function Header({ user, hideHeader }) {
               </Link>
             )}
           </Grid>
-          <Grid item sm={2} xs={2} style={{ textAlign: "center" }}>
+          <Grid item sm={2} xs={2} style={{ textAlign: "right" }}>
             {user && user.isAdmin && !user.isGithubConnected ? (
               <Hidden smDown>
                 <a href="/auth/github">
-                  <Button variant="raised" color="primary">
+                  <Button
+                    variant="raised"
+                    color="primary"
+                    style={styleRaisedButton}
+                  >
                     Connect Github
                   </Button>
                 </a>
               </Hidden>
             ) : null}
           </Grid>
-          <Grid item sm={1} xs={2} style={{ textAlign: "center" }}>
+          <Grid item sm={2} xs={3} style={{ textAlign: "right" }}>
             {user ? (
               <div style={{ whiteSpace: " nowrap" }}>
                 {!user.isAdmin ? (
