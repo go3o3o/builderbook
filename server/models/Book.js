@@ -266,29 +266,22 @@ class BookClass {
       $addToSet: { purchasedBookIds: book.id },
     }).exec();
 
-    getEmailTemplate(isPreorder ? "preorder" : "purchase", {
-      userName: user.displayName,
-      bookTitle: book.name,
-      bookUrl: `${ROOT_URL}/books/${book.slug}/introduction`,
-    })
-      .then((template) =>
-        sendEmail({
-          from: `Builder Book <${process.env.EMAIL_SUPPORT_FROM_ADDRESS}>`,
-          to: [user.email],
-          subject: template.subject,
-          body: template.message,
-        })
-      )
-      .catch((error) => {
-        logger.error("Email sending error:", error);
-      });
+    const template = await getEmailTemplate(
+      isPreorder ? "preorder" : "purchase",
+      {
+        userName: user.displayName,
+        bookTitle: book.name,
+        bookUrl: `${ROOT_URL}/books/${book.slug}/introduction`,
+      }
+    );
 
-    subscribe({
-      email: user.email,
-      listName: isPreorder ? "preordered" : "ordered",
-      book: book.slug,
+    sendEmail({
+      from: `Kelly from builderbook.org <${process.env.EMAIL_SUPPORT_FROM_ADDRESS}>`,
+      to: [user.email],
+      subject: template.subject,
+      body: template.message,
     }).catch((error) => {
-      logger.error("Mailchimp subscribing error:", error);
+      logger.error("Email sending error:", error);
     });
 
     return Purchase.create({
@@ -329,19 +322,6 @@ class BookClass {
       createdAt: new Date(),
       isFree: true,
     });
-  }
-
-  static async getPreorderedUsersEmail(bookId) {
-    const preorders = await Purchase.find(
-      { bookId, isPreorder: true },
-      "userId"
-    );
-    const users = await User.find(
-      { _id: { $in: preorders.map((p) => p.userId) } },
-      "email"
-    );
-
-    return users.map((u) => u.email);
   }
 }
 

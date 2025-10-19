@@ -25,7 +25,7 @@ class GiveFreeBook extends Component {
     users: [],
   };
 
-  searchUser = (event) => {
+  searchUser = async (event) => {
     event.preventDefault();
     const { searchValue } = this.state;
 
@@ -33,13 +33,12 @@ class GiveFreeBook extends Component {
       return;
     }
 
-    searchUser(searchValue)
-      .then(({ users }) => {
-        this.setState({ users });
-      })
-      .catch((err) => {
-        notify(err);
-      });
+    try {
+      const { users } = await searchUser(searchValue);
+      this.setState({ users });
+    } catch (err) {
+      notify(err);
+    }
   };
 
   renderUser(user) {
@@ -85,19 +84,21 @@ class GiveFreeBook extends Component {
         <br />
         <br />
         <Button
-          onClick={(event) => {
+          variant="raised"
+          onClick={async (event) => {
             event.preventDefault();
 
-            giveFreeBook({ userId: user._id, bookId: this.state[user._id] })
-              .then(() => {
-                notify("Done");
-                this.setState({ [user._id]: "" });
-              })
-              .catch((err) => {
-                notify(err);
+            try {
+              await giveFreeBook({
+                userId: user._id,
+                bookId: this.state[user._id],
               });
+              notify("Done");
+              this.setState({ [user._id]: "" });
+            } catch (err) {
+              notify(err);
+            }
           }}
-          raised
         >
           Give free book
         </Button>
