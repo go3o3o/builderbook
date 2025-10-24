@@ -10,6 +10,11 @@ import Button from "material-ui/Button";
 import { buyBook } from "../../lib/api/customer";
 import notify from "../../lib/notifier";
 
+const styleBuyButton = {
+  margin: "20px 20px 20px 0px",
+  font: "14px Muli",
+};
+
 class BuyButton extends React.Component {
   static propTypes = {
     book: PropTypes.shape({
@@ -77,15 +82,17 @@ class BuyButton extends React.Component {
         <div>
           <Button
             variant="raised"
-            style={{ margin: "25px 0px 0px 0px" }}
+            style={styleBuyButton}
             color="primary"
             onClick={this.onLoginClicked}
           >
-            {preorderPrice ? "Pre-order book" : "Buy book"} for ${price}
+            {preorderPrice ? "Pre-order" : "Buy"} for ${price}
           </Button>
 
           {preorderPrice ? (
-            <p>After pre-order, price will be ${book.price}</p>
+            <span style={{ verticalAlign: "middle", fontSize: "15px" }}>
+              On March 15th, price becomes ${book.price}.
+            </span>
           ) : null}
         </div>
       );
@@ -100,16 +107,14 @@ class BuyButton extends React.Component {
         email={user.email}
         desktopShowModal={showModal || null}
       >
-        <Button
-          style={{ margin: "25px 0px 0px 0px" }}
-          variant="raised"
-          color="primary"
-        >
-          {preorderPrice ? "Pre-order book" : "Buy book"} for ${price}
+        <Button variant="raised" style={styleBuyButton} color="primary">
+          {preorderPrice ? "Pre-order" : "Buy"} for ${price}
         </Button>
 
         {preorderPrice ? (
-          <p>After pre-order, price will be ${book.price}</p>
+          <span style={{ verticalAlign: "middle", fontSize: "15px" }}>
+            On March 15th, price becomes ${book.price}.
+          </span>
         ) : null}
       </StripeCheckout>
     );
