@@ -77,18 +77,11 @@ class ReadChapter extends React.Component {
   }
 
   componentDidMount() {
-    document.getElementById("main-content").addEventListener(
-      "scroll",
-      throttle(() => {
-        this.onScrollActiveSection();
-        this.onScrollHideHeader();
-      }, 500)
-    );
+    document
+      .getElementById("main-content")
+      .addEventListener("scroll", this.onScroll);
 
-    let isMobile = false;
-    if (window.innerWidth < 768) {
-      isMobile = true;
-    }
+    const isMobile = window.innerWidth < 768;
 
     if (this.state.isMobile !== isMobile) {
       this.setState({ isMobile }); // eslint-disable-line
@@ -116,17 +109,19 @@ class ReadChapter extends React.Component {
   componentWillUnmount() {
     document
       .getElementById("main-content")
-      .removeEventListener("scroll", () => {
-        this.onScrollActiveSection();
-        this.onScrollHideHeader();
-      });
+      .removeEventListener("scroll", this.onScroll);
   }
+
+  onScroll = throttle(() => {
+    this.onScrollActiveSection();
+    this.onScrollHideHeader();
+  }, 500);
 
   onScrollActiveSection = () => {
     const sectionElms = document.querySelectorAll("span.section-anchor");
     let activeSection;
 
-    let preBound;
+    let aboveSection;
     for (let i = 0; i < sectionElms.length; i += 1) {
       const s = sectionElms[i];
       const b = s.getBoundingClientRect();
@@ -142,7 +137,7 @@ class ReadChapter extends React.Component {
       }
 
       if (anchorBottom > window.innerHeight && i > 0) {
-        if (preBound.bottom <= 0) {
+        if (aboveSection.bottom <= 0) {
           activeSection = {
             text: sectionElms[i - 1].textContent.replace(/\n/g, "").trim(),
             hash: sectionElms[i - 1].attributes.getNamedItem("name").value,
@@ -156,7 +151,7 @@ class ReadChapter extends React.Component {
         };
       }
 
-      preBound = b;
+      aboveSection = b;
     }
 
     if (this.state.activeSection !== activeSection) {
@@ -210,7 +205,7 @@ class ReadChapter extends React.Component {
           // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: htmlContent }}
         />
-        {!chapter.isPurchased ? (
+        {!chapter.isPurchased && !chapter.isFree ? (
           <BuyButton
             user={user}
             book={chapter.book}
