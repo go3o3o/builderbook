@@ -9,13 +9,13 @@ import logger from "../logs";
 import generateSlug from "../utils/slugify";
 import { subscribe } from "../mailchimp";
 
+import getRootUrl from "../../lib/api/getRootUrl";
 import Chapter from "./Chapter";
 import User from "./User";
 import Purchase from "./Purchase";
 import getEmailTemplate from "./EmailTemplate";
 
-const ROOT_URL =
-  process.env.ROOT_URL || `http://localhost:${process.env.PORT || 8000}`;
+const ROOT_URL = getRootUrl();
 
 const mongoSchema = new Schema({
   name: {
@@ -43,6 +43,8 @@ const mongoSchema = new Schema({
     type: Number,
     required: true,
   },
+
+  textNearButton: String,
 
   isInPreorder: {
     type: Boolean,
@@ -101,6 +103,7 @@ class BookClass {
   static async add({
     name,
     price,
+    textNearButton = "",
     githubRepo,
     supportURL = "",
     isInPreorder = null,
@@ -112,6 +115,7 @@ class BookClass {
       name,
       slug,
       price,
+      textNearButton,
       githubRepo,
       supportURL,
       isInPreorder,
@@ -124,6 +128,7 @@ class BookClass {
     id,
     name,
     price,
+    textNearButton = "",
     githubRepo,
     supportURL = "",
     isInPreorder = null,
@@ -137,6 +142,7 @@ class BookClass {
 
     const modifier = {
       price,
+      textNearButton,
       supportURL,
       githubRepo,
       isInPreorder,
@@ -238,7 +244,6 @@ class BookClass {
     const chargeObj = await stripeCharge({
       amount: price * 100,
       token: stripeToken.id,
-      bookName: book.name,
       buyerEmail: user.email,
     });
 
@@ -278,7 +283,6 @@ class BookClass {
       amount: price * 100,
       createdAt: new Date(),
       stripeCharge: chargeObj,
-
       isPreorder,
     });
   }
