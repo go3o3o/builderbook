@@ -1,10 +1,13 @@
 import express from "express";
 import session from "express-session";
+import compression from "compression";
 import mongoSessionStore from "connect-mongo";
 import bodyParser from "body-parser";
 import next from "next";
 import mongoose from "mongoose";
-
+import helmet from "helmet";
+import sitemapAndRobots from "./sitemapAndRobots";
+import getRootUrl from "../lib/api/getRootUrl";
 import auth from "./google";
 import { setupGithub as github } from "./github";
 import api from "./api";
@@ -21,7 +24,7 @@ const MONGO_URL = dev ? process.env.MONGO_URL_TEST : process.env.MONGO_URL;
 mongoose.connect(MONGO_URL);
 
 const port = process.env.PORT || 8000;
-const ROOT_URL = process.env.ROOT_URL || `http://localhost:${port}`;
+const ROOT_URL = getRootUrl();
 
 const URL_MAP = {
   "/login": "/public/login",
@@ -35,7 +38,6 @@ app.prepare().then(() => {
   const server = express();
 
   // give all Nextjs's request to Nextjs before anything else
-  // no middleware (auth, session etc...) needed for it
   server.get("/_next/*", (req, res) => {
     handle(req, res);
   });
@@ -44,6 +46,8 @@ app.prepare().then(() => {
     handle(req, res);
   });
 
+  server.use(helmet());
+  server.use(compression());
   server.use(bodyParser.json());
 
   const MongoStore = mongoSessionStore(session);
@@ -73,6 +77,8 @@ app.prepare().then(() => {
   github({ server });
   api(server);
   routesWithSlug({ server, app });
+
+  sitemapAndRobots({ server });
 
   server.get("*", (req, res) => {
     const url = URL_MAP[req.path];
