@@ -28,6 +28,7 @@ const optionsMenuAdmin = [
   {
     text: "Log out",
     href: "/logout",
+    noPrefetch: true,
   },
 ];
 
