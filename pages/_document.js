@@ -1,8 +1,13 @@
+/* eslint-disable react/no-danger */
+/* global gaTrackingId */
+
 import React from "react";
 import JssProvider from "react-jss/lib/JssProvider";
 import Document, { Head, Main, NextScript } from "next/document";
 
 import getContext from "../lib/context";
+
+require("dotenv").config();
 
 class MyDocument extends Document {
   render() {
@@ -62,14 +67,30 @@ class MyDocument extends Document {
                 background:#FFF;
                 color: #000;
                 border: 1px solid #ddd;
+                font-size: 14px;
               }
               code {
                 font-size: 14px;
                 background: #FFF;
-                padding: 3px 5px;
               }
             `}
           </style>
+          <script
+            async
+            src={`https://www.googletagmanager.com/gtag/js?id=${gaTrackingId}`}
+          />
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){
+                  dataLayer.push(arguments);
+                }
+                gtag('js', new Date());
+                gtag('config', '${gaTrackingId}');
+              `,
+            }}
+          />
         </Head>
         <body
           style={{
